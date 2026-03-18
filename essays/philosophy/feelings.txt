@@ -1,0 +1,48 @@
+CAN YOU KNOW HOW I FEEL?
+
+
+Alexander Macdougall
+
+
+_______________________________________
+
+ABSTRACT (ONE SPACE ABOVE, TWO BELOW)
+
+_______________________________________ 
+
+What we know about our surroundings often plays deeply into the moral judgements of our actions. For instance, if someone was drowning in a pool and I saw her, the ethically correct thing to do - as someone who is a competent swimmer - would almost certainly be to try and help her. Had I not seen or otherwise perceived the swimmer’s plight, then it seems like any obligation to rescue her is much less than if I had seen her. But what if someone told me that this person was drowning? Can I know that I ought to help the swimmer based on the testimony of another, or would I only know the plight of the swimmer once I saw her with my own eyes and heard her with my own ears? Concisely, can I know something based on moral testimony? With this latter question in mind and without exploring each facet too broadly, the epistemic issue of knowledge derived from moral testimony is the focus of this paper. Moreover, I argue that knowledge can be acquired from moral testimony. Though, there are certainly some issues to confront before reaching such a conclusion. Testimony itself is riddled with weaknesses in terms of precise recollection, and for some morality is outside the realm of facts or objectivity. By drawing on several philosophers who examine testimonial knowledge, I hope to show that moral knowledge: exists and carries with it some utility, can be acquired in a similar fashion to other similar flavors of knowledge, and that there are practical applications for knowledge acquired by moral testimony. 
+
+The existence or non-existence of moral knowledge is perhaps the most difficult hurdle to overcome when answering the question of whether moral testimony can transmit knowledge or not. An emotivist might claim that there really is no such thing as moral knowledge, as such knowledge relates more to feelings than facts. Regarding this problem, the content of this paper takes a stance of moral realism: some moral claims are true. 
+
+Firstly, what we know is often at the root of what we do, and this includes moral dilemmas that carry real outcomes. In my mind, outcomes regarding moral issues affect people in very tangible ways, and the ability for people to transmit their beliefs about such issues may have utility enough to justify those beliefs.  Alison Hills writes that a) moral testimony may have some utility even if knowledge cannot be passed on (i.e., without moral knowledge, we may have to disregard moral beliefs, even well justified moral beliefs), and b) people could plausibly refrain from making any moral judgements if moral knowledge does not exist.(1) Regarding her first point, it does seem that there is usefulness to trusting moral testimony, even if it results in something less than knowledge. There is social utility to punishing a member of a tribe who loots, cheats, murders, and so on. Similarly, there is medical utility to understanding the pathogenicity or virulence of a disease affecting a population. Even though the first example is a social concern and the second is a medical concern, both require knowledge of tangible things and relative events to determine an outcome. If my neighbor steals my lawnmower, I will probably be upset. If I eat some bad fish, I will probably become sick. In either case, being able to testify to the pain of each event carries a utility that could arouse satisfying results: give me my lawnmower back and bring me a Gravol. 
+
+Similarly abstract though arguably more subjective, writings about the acquisition of aesthetic knowledge may provide some insight into the acquisition of knowledge from moral testimony. Malcolm Budd argues against a thesis known as the acquaintance principle. This principle states that a person must experience first-hand a piece of art to have any sort of knowledge about its aesthetic value.(2) Regarding moral knowledge, Budd goes on to quote Michael
+_______________________________________ 
+1. Alison Hills, “Moral Testimony,” Philosophy Compass, (2013): 553. 
+2. Malcolm Budd, “The Acquaintance Principle,” British Journal of Aesthetics, no. 4 (2003): 386.
+
+Tanner, who states that some moral judgements do require first-hand experience.(3) Budd disagrees with Tanner specifically regarding aesthetic judgements, though I believe moral judgements can be extrapolated upon here as well. The key point is that of the transmission of judgements, moral, aesthetic, or otherwise. Budd concludes his paper by stating that aesthetic judgements lack appreciation when transmitted, but that judgements of aesthetic properties are indeed transmissible.(4) I believe a similar statement holds regarding moral testimony. I may not be able to completely appreciate the moral testimony of a grocery store owner who decries the theft of her goods because I do not own a grocery store; so, I cannot relate to her experience enough to say that I really know what it feels like to be the victim of grocery theft. However, I believe that I can know based on her testimony that what happened to her was morally wrong - outside of Robin Hood-esque scenarios, which would require their own sort of transmission and analysis of moral knowledge. Assuming nothing could defeat the grocery store owner’s recounting, I can imagine how the grocery store owner feels based on her recollection of the event. I do not believe that it is necessary for me to experience grocery theft myself to really obtain knowledge from her moral testimony. Such a scenario would make it difficult for practical applications of the law: judges and juries would have to experience the crime themselves to reach the fact of the matter. 
+
+Even so, how can we really be sure that the testimony of the wronged grocery store owner provides the judge and jury with knowledge of the crime? Jennifer Lackey explores the transmission of testimony, aptly coined transmission view (TV). TV is split into a necessity thesis and a sufficiency thesis: the former states that a hearer knows that p so long as the speaker knows that p; the latter states that a hearer can believe that p based on the speaker’s testimonial content
+_______________________________________ 
+3. Malcolm Budd, 388.
+4. Ibid, 392.
+
+and that the hearer “has no undefeated defeaters for believing that p.  If, as I believe, moral knowledge exists, then the necessity thesis seems to hold that such knowledge could be transmitted via testimony so long as the speaker is justified in their beliefs about a moral issue. The sufficiency thesis also seems to hold, adding that the hearer should have no justifiable reason to discount the speaker’s testimony to justifiably believe the speaker. Returning to the thieved grocery store owner, I ought to be able to understand and appreciate her predicament, especially if there is nothing about her testimony that would defeat it. 
+In summation, moral knowledge seems to exist and there is utility to its existence; the direct acquaintance of an agent to the experience of another agent appears to be unnecessary for acquiring testimonial knowledge; and the knowledge of the speaker is transmissible so long as the speaker knows that p and that the hearer has no justifiable reason(s) to discount the speaker’s testimony. There are certainly some plausible faults with this conclusion. The existence of moral knowledge could be justifiably defeated, as emotivism may claim. Additionally, direct experience of a moral issue could be necessary to truly know such an experience. Finally, the transmission view could be defeated with Gettier cases or intense skepticism. However, the job of this paper was not to pulverize each of these counter points. Instead, this paper has sought to provide a short, plausible framework for the transmission of knowledge via moral testimony. 
+_______________________________________
+5. Jennifer Lackey, “Testimony: Acquiring Knowledge from Others,” 84.
+
+_______________________________________
+BIBLIOGRAPHY
+
+BUDD, MALCOLM. “The Acquaintance Principle.” British Journal of Aesthetics, no. 4 (2003): 386–392.
+
+HILLS, ALISON. “Moral Testimony.” Philosophy Compass (2013): 552–559.
+
+LACKEY, JENNIFER. “Testimony: Acquiring Knowledge from Others.” (2013): 71–91.
+_______________________________________
+
+
+
+
