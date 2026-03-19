@@ -2,10 +2,43 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const output = document.getElementById("output");
   const input = document.getElementById("commandInput");
-  let essays = {}; // will be loaded from JSON
+
+  let essays = {};
   let currentSubject = null;
 
-  // Load the index JSON dynamically
+  // Typing control
+  let typingTimeout = null;
+  let isTyping = false;
+
+  // =========================
+  // TYPEWRITER FUNCTION
+  // =========================
+  function typeText(text, speed = 10) {
+    // Cancel any ongoing typing
+    if (typingTimeout) {
+      clearTimeout(typingTimeout);
+    }
+
+    isTyping = true;
+    output.textContent = "";
+    let i = 0;
+
+    function type() {
+      if (i < text.length) {
+        output.textContent += text.charAt(i);
+        i++;
+        typingTimeout = setTimeout(type, speed);
+      } else {
+        isTyping = false;
+      }
+    }
+
+    type();
+  }
+
+  // =========================
+  // LOAD JSON INDEX
+  // =========================
   fetch("essays/index.json")
     .then(response => response.json())
     .then(data => {
@@ -17,10 +50,13 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error(err);
     });
 
-  // Show main menu
+  // =========================
+  // MAIN MENU
+  // =========================
   function showMenu() {
     currentSubject = null;
-    output.textContent = `
+
+    typeText(`
 PORTFOLIO TERMINAL
 
 Commands:
@@ -28,14 +64,17 @@ Commands:
 ${Object.keys(essays).join("\n")}
 
 help
-`;
+`);
   }
 
-  // Show essay list for a subject
+  // =========================
+  // SUBJECT MENU
+  // =========================
   function showSubjectMenu(subject) {
     currentSubject = subject;
     const list = essays[subject].join("\n- ");
-    output.textContent = `
+
+    typeText(`
 ${subject.toUpperCase()} ESSAYS
 
 Type one of the following to view the essay:
@@ -43,24 +82,19 @@ Type one of the following to view the essay:
 - ${list}
 
 Type 'help' to return
-`;
-  }
-function typeText(text, speed = 10) {
-  output.textContent = "";
-  let i = 0;
-
-  function type() {
-    if (i < text.length) {
-      output.textContent += text.charAt(i);
-      i++;
-      setTimeout(type, speed);
-    }
+`);
   }
 
-  type();
-}
-  // Load essay
+  // =========================
+  // LOAD ESSAY (NO TYPING)
+  // =========================
   function loadEssay(subject, essayName) {
+    // Cancel typing immediately
+    if (typingTimeout) {
+      clearTimeout(typingTimeout);
+      isTyping = false;
+    }
+
     output.textContent = "Loading...\n";
 
     const filePath = `essays/${subject}/${essayName}.txt`;
@@ -79,23 +113,31 @@ function typeText(text, speed = 10) {
       });
   }
 
-  // Handle commands
+  // =========================
+  // COMMAND HANDLER
+  // =========================
   function runCommand(cmd) {
     if (!cmd) return;
 
     cmd = cmd.toLowerCase().trim();
+
+    // Cancel typing if user interrupts
+    if (isTyping && typingTimeout) {
+      clearTimeout(typingTimeout);
+      isTyping = false;
+    }
 
     if (cmd === "help") {
       showMenu();
       return;
     }
 
-    // Second-level menu
+    // If inside subject menu
     if (currentSubject) {
       if (essays[currentSubject].includes(cmd)) {
         loadEssay(currentSubject, cmd);
       } else {
-        output.textContent = `Invalid essay for ${currentSubject}: ${cmd}\n\nType help to return`;
+        typeText(`Invalid essay for ${currentSubject}: ${cmd}\n\nType help to return`);
       }
       return;
     }
@@ -104,11 +146,13 @@ function typeText(text, speed = 10) {
     if (essays.hasOwnProperty(cmd)) {
       showSubjectMenu(cmd);
     } else {
-      output.textContent = `Invalid command: ${cmd}\n\nType help to return`;
+      typeText(`Invalid command: ${cmd}\n\nType help to return`);
     }
   }
 
-  // Listen for Enter key
+  // =========================
+  // INPUT LISTENER
+  // =========================
   input.addEventListener("keydown", e => {
     if (e.key === "Enter") {
       e.preventDefault();
@@ -117,11 +161,6 @@ function typeText(text, speed = 10) {
     }
   });
 
+  input.focus();
+
 });
-
-
-
-
-
-
-
