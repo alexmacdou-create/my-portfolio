@@ -55,10 +55,12 @@ input.addEventListener("keydown", e => {
   }
 
   // ESC = go back to main menu
+document.addEventListener("keydown", e => {
+
   if (e.key === "Escape") {
     e.preventDefault();
 
-    // Cancel typing immediately
+    // Cancel typing
     if (typingTimeout) {
       clearTimeout(typingTimeout);
       isTyping = false;
@@ -66,7 +68,10 @@ input.addEventListener("keydown", e => {
 
     input.value = "";
     showMenu();
+    input.focus(); // ensure cursor comes back
   }
+
+});
 
   // UP ARROW
   if (e.key === "ArrowUp") {
