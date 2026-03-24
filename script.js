@@ -7,18 +7,19 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentSubject = null;
 
   // =========================
-  // TYPING SYSTEM
+  // TYPING SYSTEM (UPGRADED)
   // =========================
   let typingTimeout = null;
   let isTyping = false;
+  let fullText = "";
 
   function typeText(text, speed = 8) {
     if (typingTimeout) {
       clearTimeout(typingTimeout);
-      isTyping = false;
     }
 
     isTyping = true;
+    fullText = text;
     output.textContent = "";
     let i = 0;
 
@@ -35,6 +36,14 @@ document.addEventListener("DOMContentLoaded", () => {
     type();
   }
 
+  function skipTyping() {
+    if (isTyping) {
+      clearTimeout(typingTimeout);
+      output.textContent = fullText;
+      isTyping = false;
+    }
+  }
+
   // =========================
   // COMMAND HISTORY
   // =========================
@@ -43,7 +52,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   input.addEventListener("keydown", e => {
 
-    // ENTER (run command)
+    // If typing → skip instead of processing input
+    if (isTyping) {
+      e.preventDefault();
+      skipTyping();
+      return;
+    }
+
+    // ENTER
     if (e.key === "Enter") {
       e.preventDefault();
 
@@ -80,13 +96,20 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // =========================
-  // GLOBAL ESC KEY (FIXED)
+  // GLOBAL ESC KEY
   // =========================
   document.addEventListener("keydown", e => {
 
     if (e.key === "Escape") {
       e.preventDefault();
 
+      // If typing → just finish text
+      if (isTyping) {
+        skipTyping();
+        return;
+      }
+
+      // Otherwise go home
       if (typingTimeout) {
         clearTimeout(typingTimeout);
         isTyping = false;
@@ -115,11 +138,11 @@ Welcome, user.
 
 `;
 
-    typeText(bootText, 5);
+    typeText(bootText, 20);
 
     setTimeout(() => {
       showMenu();
-    }, 500);
+    }, 3000);
   }
 
   // =========================
@@ -168,7 +191,7 @@ Type 'help' to return
   }
 
   // =========================
-  // LOAD ESSAY
+  // LOAD ESSAY (WITH TYPING)
   // =========================
   function loadEssay(subject, essayName) {
     if (typingTimeout) {
@@ -184,7 +207,8 @@ Type 'help' to return
         return res.text();
       })
       .then(text => {
-        output.textContent = text + "\n\nType help to return";
+        // slower typing for essays
+        typeText(text + "\n\nType help to return", 2);
       })
       .catch(() => {
         typeText(`Error: file not found\n\nType help`);
@@ -199,7 +223,6 @@ Type 'help' to return
 
     cmd = cmd.toLowerCase().trim();
 
-    // Cancel typing if user interrupts
     if (isTyping && typingTimeout) {
       clearTimeout(typingTimeout);
       isTyping = false;
