@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let isTyping = false;
   let fullText = "";
 
-  function typeText(text, speed = 8) {
+  function typeText(text, speed = 10) {
     if (typingTimeout) {
       clearTimeout(typingTimeout);
     }
