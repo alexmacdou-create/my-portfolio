@@ -6,8 +6,6 @@ body {
   color: #00ff00;
   font-family: monospace;
   padding: 20px;
-  margin: 0;
-  box-sizing: border-box;
 }
 
 /* =========================
@@ -15,8 +13,8 @@ body {
 ========================= */
 #terminal {
   max-width: 800px;
-  width: 100%;
   margin: 0 auto;
+  width: 100%;
 }
 
 /* =========================
@@ -24,7 +22,7 @@ body {
 ========================= */
 #output {
   white-space: pre-wrap;
-  overflow-wrap: break-word;
+  overflow-wrap: break-word;  /* important for Firefox */
   word-break: break-word;
   margin-bottom: 10px;
 }
@@ -36,18 +34,18 @@ body {
 }
 
 @keyframes blink {
-  0%,50%,100% { opacity: 1; }
-  25%,75% { opacity: 0; }
+  0%, 50%, 100% { opacity: 1; }
+  25%, 75% { opacity: 0; }
 }
 
 /* =========================
-   INPUT LINE (top & bottom)
+   INPUT LINES
 ========================= */
-.inputLine {
+#inputLine,
+.inputLineEssay {
   display: flex;
-  align-items: center; /* aligns prompt and input vertically */
   gap: 8px;
-  margin: 10px 0;
+  margin-top: 10px;
 }
 
 /* =========================
@@ -55,15 +53,14 @@ body {
 ========================= */
 .prompt {
   font-weight: bold;
-  color: #00ff00;
 }
 
 /* =========================
-   ALL INPUTS (top & bottom)
+   ALL INPUTS
 ========================= */
 input.commandInput {
-  background-color: black !important;
-  color: #00ff00 !important;
+  background: black;
+  color: #00ff00;
   border: none;
   outline: none;
   font-family: monospace;
@@ -71,18 +68,10 @@ input.commandInput {
   width: 100%;
   padding: 0;
   margin: 0;
-  box-sizing: border-box;
 }
 
 /* Placeholder styling */
 input.commandInput::placeholder {
   color: #00ff00;
   opacity: 0.5;
-}
-
-/* =========================
-   ESSAY TEXT
-========================= */
-.essayText {
-  margin: 10px 0;
 }
