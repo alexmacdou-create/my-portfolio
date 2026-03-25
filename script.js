@@ -275,10 +275,10 @@ Type 'help' to return
 
 });
 
-// Mobile tap = back / ESC
-document.addEventListener("click", (e) => {
+// Mobile touch = back / ESC
+document.addEventListener("touchstart", (e) => {
 
-  // Ignore clicks on the input field
+  // Ignore touches on the input
   if (e.target === input) return;
 
   if (isTyping) {
