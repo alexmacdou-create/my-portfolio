@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
 
+  const terminal = document.getElementById("terminal");
   const output = document.getElementById("output");
   const input = document.getElementById("commandInput");
 
@@ -7,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentSubject = null;
 
   // =========================
-  // TYPING SYSTEM (UPGRADED)
+  // TYPING SYSTEM
   // =========================
   let typingTimeout = null;
   let isTyping = false;
@@ -48,63 +49,62 @@ document.addEventListener("DOMContentLoaded", () => {
   let commandHistory = [];
   let historyIndex = -1;
 
-  input.addEventListener("keydown", e => {
-
-    // If typing → skip instead of processing input
-    if (isTyping) {
-      e.preventDefault();
-      skipTyping();
-      return;
-    }
-
-    // ENTER
-    if (e.key === "Enter") {
-      e.preventDefault();
-
-      const cmd = input.value.trim();
-      if (cmd) {
-        commandHistory.push(cmd);
-        historyIndex = commandHistory.length;
+  function attachInputListener(el) {
+    el.addEventListener("keydown", e => {
+      if (isTyping) {
+        e.preventDefault();
+        skipTyping();
+        return;
       }
 
-      runCommand(cmd);
-      input.value = "";
-    }
-
-    // UP ARROW
-    if (e.key === "ArrowUp") {
-      e.preventDefault();
-      if (historyIndex > 0) {
-        historyIndex--;
-        input.value = commandHistory[historyIndex];
+      // ENTER
+      if (e.key === "Enter") {
+        e.preventDefault();
+        const cmd = el.value.trim();
+        if (cmd) {
+          commandHistory.push(cmd);
+          historyIndex = commandHistory.length;
+        }
+        runCommand(cmd);
+        el.value = "";
       }
-    }
 
-    // DOWN ARROW
-    if (e.key === "ArrowDown") {
-      e.preventDefault();
-      if (historyIndex < commandHistory.length - 1) {
-        historyIndex++;
-        input.value = commandHistory[historyIndex];
-      } else {
-        input.value = "";
+      // UP / DOWN arrows
+      if (e.key === "ArrowUp") {
+        e.preventDefault();
+        if (historyIndex > 0) {
+          historyIndex--;
+          el.value = commandHistory[historyIndex];
+        }
       }
-    }
-  });
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        if (historyIndex < commandHistory.length - 1) {
+          historyIndex++;
+          el.value = commandHistory[historyIndex];
+        } else {
+          el.value = "";
+        }
+      }
+    });
+  }
+
+  attachInputListener(input);
 
   // =========================
   // GLOBAL ESC KEY
   // =========================
   document.addEventListener("keydown", e => {
-
     if (e.key === "Escape") {
       e.preventDefault();
-
       if (isTyping) {
         skipTyping();
         return;
       }
-
+      if (typingTimeout) {
+        clearTimeout(typingTimeout);
+        isTyping = false;
+      }
       input.value = "";
       showMenu();
       input.focus();
@@ -127,7 +127,6 @@ Welcome, user.
 
 `;
     typeText(bootText, 20);
-
     setTimeout(() => {
       showMenu();
     }, 3000);
@@ -151,7 +150,6 @@ Welcome, user.
   // =========================
   function showMenu() {
     currentSubject = null;
-
     typeText(`
 PORTFOLIO TERMINAL
 
@@ -166,7 +164,6 @@ help
   function showSubjectMenu(subject) {
     currentSubject = subject;
     const list = essays[subject].join("\n- ");
-
     typeText(`
 ${subject.toUpperCase()} ESSAYS
 
@@ -174,12 +171,12 @@ Type one of the following:
 
 - ${list}
 
-Type 'back' to return
+Type 'help' to return
 `);
   }
 
   // =========================
-  // LOAD ESSAY (WITH TOP-BACK PROMPT)
+  // LOAD ESSAY (WITH TYPING)
   // =========================
   function loadEssay(subject, essayName) {
     if (typingTimeout) {
@@ -195,12 +192,33 @@ Type 'back' to return
         return res.text();
       })
       .then(text => {
-        const fullEssay = `Type 'back' to return\n\n${text}`;
-        typeText(fullEssay, 0.125);
+        // Top input stays; create bottom input if needed
+        ensureBottomInput();
+
+        // Fast typing for essays
+        typeText("Type back to return.\n\n" + text + "\n\nType back to return", 0.125);
+
+        // Scroll top input into view
+        input.scrollIntoView({ behavior: "smooth" });
       })
       .catch(() => {
-        typeText(`Error: file not found\n\nType 'back'`);
+        typeText(`Error: file not found\n\nType help`);
       });
+  }
+
+  // =========================
+  // DUPLICATE INPUT AT BOTTOM
+  // =========================
+  function ensureBottomInput() {
+    if (!document.getElementById("bottomCommandInput")) {
+      const bottomLine = input.parentElement.cloneNode(true);
+      bottomLine.id = "bottomInputLine";
+      const bottomInput = bottomLine.querySelector("input");
+      bottomInput.id = "bottomCommandInput";
+      bottomInput.placeholder = "Type command + ENTER";
+      attachInputListener(bottomInput);
+      terminal.appendChild(bottomLine);
+    }
   }
 
   // =========================
@@ -208,7 +226,6 @@ Type 'back' to return
   // =========================
   function runCommand(cmd) {
     if (!cmd) return;
-
     cmd = cmd.toLowerCase().trim();
 
     if (isTyping && typingTimeout) {
@@ -216,68 +233,45 @@ Type 'back' to return
       isTyping = false;
     }
 
-    // HELP command → show instructions
     if (cmd === "help") {
-      typeText(`
-PORTFOLIO TERMINAL HELP
-
-Navigation:
-
-- Type a subject name to see essays in that category.
-- Type the essay name to open it.
-- While reading an essay, type 'back' to return to the main menu.
-- On mobile, tap outside the input field to return.
-- On desktop, press ESC to return.
-`);
-      return;
-    }
-
-    // BACK command → return to main menu
-    if (cmd === "back") {
       showMenu();
       return;
     }
 
-    // Inside subject menu
     if (currentSubject) {
       if (essays[currentSubject].includes(cmd)) {
         loadEssay(currentSubject, cmd);
+      } else if (cmd === "back") {
+        showMenu();
       } else {
-        typeText(`Invalid entry\n\nType 'back'`);
+        typeText(`Invalid entry\n\nType help`);
       }
       return;
     }
 
-    // Main menu command → show subject menu
     if (essays.hasOwnProperty(cmd)) {
       showSubjectMenu(cmd);
     } else {
-      typeText(`Unknown command\n\nType 'help'`);
+      typeText(`Unknown command\n\nType help`);
     }
   }
 
   input.focus();
 
   // =========================
-  // MOBILE TOUCH NAVIGATION
+  // MOBILE BACK BUTTON
   // =========================
-  function mobileBackHandler(e) {
-    // Ignore taps on input
-    if (e.target === input) return;
-
-    // If typing → finish text
-    if (isTyping) {
-      skipTyping();
-      return;
-    }
-
-    // Otherwise go home
-    showMenu();
-    input.focus();
-  }
-
   if (/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-    document.addEventListener("touchstart", mobileBackHandler, { passive: true });
+    window.addEventListener("popstate", e => {
+      if (isTyping) {
+        skipTyping();
+      } else {
+        showMenu();
+        input.focus();
+      }
+      history.pushState(null, "", location.href);
+    });
+    history.pushState(null, "", location.href);
   }
 
 });
