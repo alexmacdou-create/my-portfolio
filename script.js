@@ -151,10 +151,15 @@ Welcome, user.
     });
 
   // =========================
-  // MENUS
+  // MENUS (MAIN & SUBJECT)
   // =========================
   function showMenu() {
     currentSubject = null;
+
+    // Remove any old top input
+    const oldTop = document.getElementById("essayTopInput");
+    if (oldTop) oldTop.remove();
+
     typeText(`
 PORTFOLIO TERMINAL
 
@@ -168,6 +173,11 @@ help
 
   function showSubjectMenu(subject) {
     currentSubject = subject;
+
+    // Remove any old top input
+    const oldTop = document.getElementById("essayTopInput");
+    if (oldTop) oldTop.remove();
+
     const list = essays[subject].join("\n- ");
     typeText(`
 ${subject.toUpperCase()} ESSAYS
@@ -181,7 +191,7 @@ Type 'help' to return
   }
 
   // =========================
-  // LOAD ESSAY (WITH TOP AND BOTTOM INPUT)
+  // LOAD ESSAY (WITH TOP & BOTTOM INPUT)
   // =========================
   function loadEssay(subject, essayName) {
     if (typingTimeout) {
@@ -204,7 +214,7 @@ Type 'help' to return
         if (oldTop) oldTop.remove();
         if (oldBottom) oldBottom.remove();
 
-        // --- Top input ---
+        // --- Top input for essay only ---
         const topLine = document.createElement("div");
         topLine.className = "inputLine";
         topLine.id = "essayTopInput";
@@ -224,7 +234,7 @@ Type 'help' to return
         // --- Essay text ---
         typeText("Type back to return.\n\n" + text + "\n\nType back to return", 0.125);
 
-        // --- Bottom input ---
+        // --- Bottom input (always present) ---
         const bottomLine = document.createElement("div");
         bottomLine.className = "inputLine";
         bottomLine.id = "essayBottomInput";
