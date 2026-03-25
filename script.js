@@ -41,7 +41,6 @@ document.addEventListener("DOMContentLoaded", () => {
   let historyIndex = -1;
 
   input.addEventListener("keydown", e => {
-    // ENTER
     if (e.key === "Enter") {
       e.preventDefault();
       const cmd = input.value.trim();
@@ -53,7 +52,6 @@ document.addEventListener("DOMContentLoaded", () => {
       input.value = "";
     }
 
-    // UP ARROW
     if (e.key === "ArrowUp") {
       e.preventDefault();
       if (historyIndex > 0) {
@@ -62,7 +60,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    // DOWN ARROW
     if (e.key === "ArrowDown") {
       e.preventDefault();
       if (historyIndex < commandHistory.length - 1) {
@@ -80,10 +77,8 @@ document.addEventListener("DOMContentLoaded", () => {
   document.addEventListener("keydown", e => {
     if (e.key === "Escape") {
       e.preventDefault();
-      if (isTyping && typingTimeout) {
-        clearTimeout(typingTimeout);
-        isTyping = false;
-      }
+      if (typingTimeout) clearTimeout(typingTimeout);
+      isTyping = false;
       input.value = "";
       showMenu();
       input.focus();
@@ -106,9 +101,7 @@ Welcome, user.
 
 `;
     typeText(bootText, 20);
-    setTimeout(() => {
-      showMenu();
-    }, 3000);
+    setTimeout(() => showMenu(), 3000);
   }
 
   // =========================
@@ -155,48 +148,70 @@ Type 'help' to return
   }
 
   // =========================
-  // LOAD ESSAY
+  // LOAD ESSAY (WITH TOP & BOTTOM INPUTS)
   // =========================
   function loadEssay(subject, essayName) {
-    if (typingTimeout) clearTimeout(typingTimeout);
-
     fetch(`essays/${subject}/${essayName}.txt`)
       .then(res => {
         if (!res.ok) throw new Error();
         return res.text();
       })
       .then(text => {
-        // Clear output and insert top input
-        output.innerHTML = `<span class="prompt">></span> Type back to return\n\n`;
+
+        // Clear output and create top input
+        output.innerHTML = '';
+        createEssayInput('top');
+
+        // Type essay text
         typeText(text + "\n", 0.125);
 
-        // Add bottom input dynamically after essay finishes typing
-        const bottomInputDiv = document.createElement("div");
-        bottomInputDiv.classList.add("inputLineEssay");
-        bottomInputDiv.innerHTML = `
-          <span class="prompt">></span>
-          <input type="text" class="commandInput" placeholder="Type back to return" autocomplete="off">
-        `;
-        output.appendChild(bottomInputDiv);
+        // Create bottom input after text
+        createEssayInput('bottom');
 
-        const bottomInput = bottomInputDiv.querySelector("input");
-        bottomInput.focus();
-
-        bottomInput.addEventListener("keydown", e => {
-          if (e.key === "Enter") {
-            e.preventDefault();
-            const cmd = bottomInput.value.trim().toLowerCase();
-            if (cmd === "back" || cmd === "help") {
-              showMenu();
-              input.focus();
-            }
-            bottomInput.value = "";
-          }
-        });
       })
       .catch(() => {
         typeText(`Error: file not found\n\nType help`);
       });
+  }
+
+  // =========================
+  // CREATE TOP/BOTTOM INPUT FOR ESSAYS
+  // =========================
+  function createEssayInput(position) {
+    const div = document.createElement("div");
+    div.classList.add("inputLineEssay");
+
+    const span = document.createElement("span");
+    span.classList.add("prompt");
+    span.textContent = ">";
+    div.appendChild(span);
+
+    const essayInput = document.createElement("input");
+    essayInput.type = "text";
+    essayInput.classList.add("commandInput");
+    essayInput.placeholder = "Type back to return";
+    div.appendChild(essayInput);
+
+    if (position === 'top') {
+      output.appendChild(div);
+      output.appendChild(document.createElement("br")); // spacing
+      essayInput.focus();
+    } else {
+      output.appendChild(document.createElement("br"));
+      output.appendChild(div);
+    }
+
+    essayInput.addEventListener("keydown", e => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        const cmd = essayInput.value.trim().toLowerCase();
+        if (cmd === "back" || cmd === "help") {
+          showMenu();
+          input.focus();
+        }
+        essayInput.value = "";
+      }
+    });
   }
 
   // =========================
@@ -228,5 +243,4 @@ Type 'help' to return
   }
 
   input.focus();
-
 });
