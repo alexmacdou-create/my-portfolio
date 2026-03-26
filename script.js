@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentSubject = null;
   let typingTimeout = null;
   let isTyping = false;
-  let fullText = "";
 
   // =========================
   // TYPING SYSTEM
@@ -15,7 +14,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (typingTimeout) clearTimeout(typingTimeout);
 
     isTyping = true;
-    fullText = text;
     output.textContent = "";
     let i = 0;
 
@@ -33,29 +31,33 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // =========================
-  // COMMAND HANDLER
+  // COMMAND HANDLER (FIXED)
   // =========================
-  function runCommand(cmd, isEssayInput = false) {
+  function runCommand(cmd) {
     if (!cmd) return;
     cmd = cmd.toLowerCase().trim();
 
-    // Universal back command
+    // Universal BACK
     if (cmd === "back") {
       showMenu();
       return;
     }
 
-    // Essay commands
-    if (currentSubject && isEssayInput) {
+    // =========================
+    // INSIDE SUBJECT
+    // =========================
+    if (currentSubject !== null) {
       if (essays[currentSubject].includes(cmd)) {
         loadEssay(currentSubject, cmd);
       } else {
-        appendEssayText("Invalid command. Type 'back' to return.\n");
+        typeText(`Unknown command\n\nType 'back'`);
       }
       return;
     }
 
-    // Menu commands
+    // =========================
+    // MAIN MENU
+    // =========================
     if (essays.hasOwnProperty(cmd)) {
       showSubjectMenu(cmd);
     } else {
@@ -85,19 +87,22 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   }
 
+  // =========================
+  // DISPLAY ESSAY (TOP INPUT ONLY)
+  // =========================
   function displayEssay(text) {
     output.innerHTML = "";
 
     // Top input
-    const topInputLine = createEssayInput();
-    output.appendChild(topInputLine);
+    const inputLine = createEssayInput();
+    output.appendChild(inputLine);
 
     // Essay text
     const essayText = document.createElement("pre");
     essayText.textContent = text;
     output.appendChild(essayText);
 
-    topInputLine.querySelector("input").focus();
+    inputLine.querySelector("input").focus();
   }
 
   function createEssayInput() {
@@ -118,7 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
     inp.addEventListener("keydown", e => {
       if (e.key === "Enter") {
         e.preventDefault();
-        runCommand(inp.value, true); // essay input
+        runCommand(inp.value);
         inp.value = "";
       }
     });
@@ -127,16 +132,12 @@ document.addEventListener("DOMContentLoaded", () => {
     return div;
   }
 
-  function appendEssayText(str) {
-    const pre = output.querySelector("pre");
-    if (pre) pre.textContent += str;
-  }
-
   // =========================
   // MENUS
   // =========================
   function showMenu() {
     currentSubject = null;
+
     typeText(`
 PORTFOLIO TERMINAL
 
@@ -144,14 +145,16 @@ Commands:
 
 ${Object.keys(essays).join("\n")}
 
-Type 'back' to return to this menu from an essay
+Type 'back' anytime to return here
 `);
     menuInput.focus();
   }
 
   function showSubjectMenu(subject) {
     currentSubject = subject;
+
     const list = essays[subject].join("\n- ");
+
     typeText(`
 ${subject.toUpperCase()} ESSAYS
 
@@ -195,7 +198,7 @@ Welcome, user.
     });
 
   // =========================
-  // GLOBAL ESC KEY (return to menu)
+  // ESC KEY
   // =========================
   document.addEventListener("keydown", e => {
     if (e.key === "Escape") {
@@ -206,7 +209,7 @@ Welcome, user.
   });
 
   // =========================
-  // MENU INPUT HANDLER
+  // MENU INPUT
   // =========================
   menuInput.addEventListener("keydown", e => {
     if (e.key === "Enter") {
