@@ -37,24 +37,19 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!cmd) return;
     cmd = cmd.toLowerCase().trim();
 
+    if (cmd === "back") {
+      showMenu();
+      return;
+    }
+
     if (currentSubject !== null) {
-  if (cmd === "back") {
-    showMenu();
-    return;
-  }
-
-  if (essays[currentSubject].includes(cmd)) {
-    loadEssay(currentSubject, cmd);
-  } else {
-    typeText(`Unknown command\n\nType 'back'`);
-  }
-  return;
-}
-
-if (cmd === "back") {
-  showMenu();
-  return;
-}
+      if (essays[currentSubject].includes(cmd)) {
+        loadEssay(currentSubject, cmd);
+      } else {
+        typeText(`Unknown command\n\nType 'back'`);
+      }
+      return;
+    }
 
     if (essays.hasOwnProperty(cmd)) {
       showSubjectMenu(cmd);
@@ -86,66 +81,25 @@ if (cmd === "back") {
   }
 
   // =========================
-  // DISPLAY ESSAY (FIXED TYPING)
+  // DISPLAY ESSAY (no top input)
   // =========================
   function displayEssay(text) {
-    output.innerHTML = "";
-
-    // Top input
-    const inputLine = createEssayInput();
-    output.appendChild(inputLine);
-
-    // Essay container
-    const essayText = document.createElement("pre");
-    output.appendChild(essayText);
+    output.textContent = "";
 
     let i = 0;
     isTyping = true;
 
     function type() {
       if (i < text.length) {
-        essayText.textContent += text.charAt(i);
+        output.textContent += text.charAt(i);
         i++;
-        typingTimeout = setTimeout(type, 1); // adjust speed if needed
+        typingTimeout = setTimeout(type, 1);
       } else {
         isTyping = false;
       }
     }
 
-    // ✅ Start typing AFTER render
-    setTimeout(type, 0);
-
-    // ✅ Focus AFTER typing has begun (prevents animation break)
-    setTimeout(() => {
-      inputLine.querySelector("input").focus();
-    }, 50);
-  }
-
-  function createEssayInput() {
-    const div = document.createElement("div");
-    div.classList.add("inputLineEssay");
-
-    const span = document.createElement("span");
-    span.classList.add("prompt");
-    span.textContent = "> ";
-    div.appendChild(span);
-
-    const inp = document.createElement("input");
-    inp.type = "text";
-    inp.classList.add("commandInput");
-    inp.placeholder = "Type command + ENTER";
-    inp.autocomplete = "off";
-
-    inp.addEventListener("keydown", e => {
-      if (e.key === "Enter") {
-        e.preventDefault();
-        runCommand(inp.value);
-        inp.value = "";
-      }
-    });
-
-    div.appendChild(inp);
-    return div;
+    type();
   }
 
   // =========================
@@ -163,7 +117,8 @@ ${Object.keys(essays).join("\n")}
 
 Type 'back' anytime to return here
 `);
-    // menuInput.focus();
+
+    menuInput.focus();
   }
 
   function showSubjectMenu(subject) {
@@ -180,6 +135,8 @@ Type one of the following:
 
 Type 'back' to return
 `);
+
+    menuInput.focus();
   }
 
   // =========================
@@ -196,6 +153,7 @@ Access granted.
 
 Welcome, user.
 `;
+
     typeText(bootText, 20);
     setTimeout(() => showMenu(), 3000);
   }
@@ -225,7 +183,7 @@ Welcome, user.
   });
 
   // =========================
-  // MENU INPUT
+  // MENU INPUT (ONLY INPUT NOW)
   // =========================
   menuInput.addEventListener("keydown", e => {
     if (e.key === "Enter") {
