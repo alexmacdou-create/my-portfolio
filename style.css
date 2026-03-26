@@ -20,6 +20,12 @@ body {
 /* =========================
    OUTPUT AREA
 ========================= */
+#output pre {
+  white-space: pre-wrap;     /* keeps formatting BUT allows wrapping */
+  overflow-wrap: break-word; /* forces long lines to wrap */
+  word-break: break-word;
+}
+
 #output {
   white-space: pre-wrap;
   overflow-wrap: break-word;  /* important for Firefox */
