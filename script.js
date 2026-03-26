@@ -158,7 +158,7 @@ ${Object.keys(essays).join("\n")}
 
 Type 'back' anytime to return here
 `);
-    menuInput.focus();
+    // menuInput.focus();
   }
 
   function showSubjectMenu(subject) {
