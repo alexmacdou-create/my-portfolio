@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // =========================
-  // DISPLAY ESSAY (WITH TYPING)
+  // DISPLAY ESSAY (FIXED TYPING)
   // =========================
   function displayEssay(text) {
     output.innerHTML = "";
@@ -94,7 +94,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const essayText = document.createElement("pre");
     output.appendChild(essayText);
 
-    // Typing animation (isolated to essay only)
     let i = 0;
     isTyping = true;
 
@@ -102,15 +101,19 @@ document.addEventListener("DOMContentLoaded", () => {
       if (i < text.length) {
         essayText.textContent += text.charAt(i);
         i++;
-        typingTimeout = setTimeout(type, 1); // 🔥 adjust speed here
+        typingTimeout = setTimeout(type, 1); // adjust speed if needed
       } else {
         isTyping = false;
       }
     }
 
-    type();
+    // ✅ Start typing AFTER render
+    setTimeout(type, 0);
 
-    inputLine.querySelector("input").focus();
+    // ✅ Focus AFTER typing has begun (prevents animation break)
+    setTimeout(() => {
+      inputLine.querySelector("input").focus();
+    }, 50);
   }
 
   function createEssayInput() {
