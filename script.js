@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
   const output = document.getElementById("output");
-  const menuInput = document.getElementById("commandInput");
 
   let essays = {};
   let currentSubject = null;
@@ -145,7 +144,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // =========================
-  // MENUS (FIXED)
+  // MENUS
   // =========================
   function showMenu() {
     currentSubject = null;
@@ -178,6 +177,14 @@ Type 'back' anytime to return here
 
     const list = essays[subject].join("\n- ");
 
+    output.innerHTML = "";
+
+    const inputLine = createEssayInput();
+    output.appendChild(inputLine);
+
+    const textBlock = document.createElement("pre");
+    output.appendChild(textBlock);
+
     typeText(`
 ${subject.toUpperCase()} ESSAYS
 
@@ -186,7 +193,11 @@ Type one of the following:
 - ${list}
 
 Type 'back' to return
-`);
+`, 10, textBlock);
+
+    setTimeout(() => {
+      inputLine.querySelector("input").focus();
+    }, 50);
   }
 
   // =========================
@@ -203,7 +214,14 @@ Access granted.
 
 Welcome, user.
 `;
-    typeText(bootText, 20);
+
+    output.innerHTML = "";
+
+    const textBlock = document.createElement("pre");
+    output.appendChild(textBlock);
+
+    typeText(bootText, 20, textBlock);
+
     setTimeout(() => showMenu(), 3000);
   }
 
@@ -229,17 +247,4 @@ Welcome, user.
       showMenu();
     }
   });
-
-  // =========================
-  // MENU INPUT (kept, but optional now)
-  // =========================
-  menuInput.addEventListener("keydown", e => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      runCommand(menuInput.value);
-      menuInput.value = "";
-    }
-  });
-
-  menuInput.focus();
 });
