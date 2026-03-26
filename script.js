@@ -31,21 +31,17 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // =========================
-  // COMMAND HANDLER (FIXED)
+  // COMMAND HANDLER
   // =========================
   function runCommand(cmd) {
     if (!cmd) return;
     cmd = cmd.toLowerCase().trim();
 
-    // Universal BACK
     if (cmd === "back") {
       showMenu();
       return;
     }
 
-    // =========================
-    // INSIDE SUBJECT
-    // =========================
     if (currentSubject !== null) {
       if (essays[currentSubject].includes(cmd)) {
         loadEssay(currentSubject, cmd);
@@ -55,9 +51,6 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // =========================
-    // MAIN MENU
-    // =========================
     if (essays.hasOwnProperty(cmd)) {
       showSubjectMenu(cmd);
     } else {
@@ -88,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // =========================
-  // DISPLAY ESSAY (TOP INPUT ONLY)
+  // DISPLAY ESSAY (WITH TYPING)
   // =========================
   function displayEssay(text) {
     output.innerHTML = "";
@@ -97,10 +90,25 @@ document.addEventListener("DOMContentLoaded", () => {
     const inputLine = createEssayInput();
     output.appendChild(inputLine);
 
-    // Essay text
+    // Essay container
     const essayText = document.createElement("pre");
-    essayText.textContent = text;
     output.appendChild(essayText);
+
+    // Typing animation (isolated to essay only)
+    let i = 0;
+    isTyping = true;
+
+    function type() {
+      if (i < text.length) {
+        essayText.textContent += text.charAt(i);
+        i++;
+        typingTimeout = setTimeout(type, 1); // 🔥 adjust speed here
+      } else {
+        isTyping = false;
+      }
+    }
+
+    type();
 
     inputLine.querySelector("input").focus();
   }
