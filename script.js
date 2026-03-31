@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   const output = document.getElementById("output");
+  const buttonsContainer = document.getElementById("buttons");
   const menuInput = document.getElementById("commandInput");
 
   let essays = {};
@@ -15,6 +16,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     isTyping = true;
     output.textContent = "";
+    buttonsContainer.innerHTML = ""; // clear buttons separately
+
     let i = 0;
 
     function type() {
@@ -34,8 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // CLICKABLE COMMAND BUTTONS
   // =========================
   function renderCommandButtons(commands) {
-    const container = document.createElement("div");
-    container.classList.add("command-buttons");
+    buttonsContainer.innerHTML = "";
 
     commands.forEach(cmd => {
       const btn = document.createElement("button");
@@ -45,10 +47,8 @@ document.addEventListener("DOMContentLoaded", () => {
         runCommand(cmd);
       });
 
-      container.appendChild(btn);
+      buttonsContainer.appendChild(btn);
     });
-
-    output.appendChild(container);
   }
 
   // =========================
@@ -86,6 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (typingTimeout) clearTimeout(typingTimeout);
     isTyping = false;
     output.textContent = "";
+    buttonsContainer.innerHTML = "";
 
     fetch(`essays/${subject}/${essayName}.txt`)
       .then(res => {
@@ -106,6 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // =========================
   function displayEssay(text) {
     output.textContent = "";
+    buttonsContainer.innerHTML = "";
 
     let i = 0;
     isTyping = true;
@@ -139,7 +141,6 @@ ${Object.keys(essays).join("\n")}
 Type 'back' anytime to return here
 `);
 
-    // Render clickable subject buttons
     setTimeout(() => {
       renderCommandButtons(Object.keys(essays));
     }, 50);
@@ -162,7 +163,6 @@ Type one of the following:
 Type 'back' to return
 `);
 
-    // Render clickable essay buttons + back
     setTimeout(() => {
       renderCommandButtons([...essays[subject], "back"]);
     }, 50);
