@@ -21,6 +21,17 @@ My second major point confronts the problem of physical proximity. Peter Singer 
 If pinning the faults of an AWS on individuals across a wide berth of society is indeterminate, perhaps the easier route is to place blame amongst those nearest to the crime; those with the most direct knowledge and plausible ill-intent. As the Red Cross alludes to regarding the ethics of operating an AWS, intent may play a direct role in evaluating the outcome of an AI-determined attack (IRC, p.11). Robert Sparrow’s paper “Killer Robots” tackles this issue of intent. Sparrow analyzes whether the programmer, the commander, or the machine itself may be the culprit. The programmer seems innocent, as accidents may be acknowledged, and the drone’s autonomy is encouraged. The commander also seems innocent, as a multitude of weapon systems, autonomous or otherwise, may accidentally fail. Finally, placing blame on the machine itself seems intuitively absurd (Sparrow, p.69-71). Sparrow goes on to relate AWS to child soldiers, insofar as the two ‘weapons’ having similar moral autonomy (Sparrow, p.73). A similar, more lighthearted analogy might involve my theoretical pet dog, Fluffers. One day, Fluffers, who has been nothing but loyal, loving, and adorable, decides to obliterate the kindergarten down the road to the best of his canine ability. This is a tragic surprise for me. Although I am his owner, it seems difficult to place the moral fault on me, given Fluffer’s innocent past. I may be liable under the law, but was it really my fault that Fluffers committed such an atrocity? The same may be said of an AWS, whether we claim that it was the programmer, the commander, the machine, or the society whose combined finances made it possible to field the device. We cannot imprison entropy, after all.   
 
 To unfortunately surmise, the issue of moral responsibility regarding an AWS committing a war crime cannot be determined. The average citizen, even one who might cry out in support of such acts, exists so distally from the act itself to make their burden of guilt essentially non-existent. Even those who we might more intuitively blame, the military commander or the weapon designer, seem separated from any fault by their own agency and that of the weapon. Once upon a time, the cobbler down the road could guarantee that my shoes would fit me; I could blame him if they did not. If my shoes don’t fit me now, I have nobody to blame but the factory in Vietnam operated by the company in Michigan. Who really made my shoes fit so poorly? Who really bombed that school? Is there anybody out there who I can blame?
+_______________________________________
+BIBLIOGRAPHY
+
+SINNOTT-ARMSTRONG, WALTER. “It’s Not My Fault: Global Warming and Individual Moral Obligations.” Perspectives on Climate Change: Science, Economics, Politics, Ethics, edited by WALTER SINNOTT-ARMSTRONG and RICHARD B. HOWARTH, Amsterdam: Elsevier, 2005: 285–307.
+
+SINGER, PETER. “Famine, Affluence, and Morality.” Philosophy & Public Affairs 1, no. 3 (1972): 229–243.
+
+INTERNATIONAL COMMITTEE OF THE RED CROSS. “Autonomous Weapon Systems: Technical, Military, Legal and Humanitarian Aspects.” Geneva: ICRC, 2014.
+
+SPARROW, ROBERT. “Killer Robots.” Journal of Applied Philosophy 24, no. 1 (2007): 62–77.
+_______________________________________
 
 
 
